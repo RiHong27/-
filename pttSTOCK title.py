@@ -7,7 +7,7 @@ today = time.strftime('%m/%d').lstrip('0')
 def pttSTOCK(url):
     resp = requests.get(url)
     if resp.status_code != 200:
-        print('URL發生錯誤：' + url)
+        print('URL ERROR：' + url)
         return
     soup = BeautifulSoup(resp.text, 'html5lib')
     paging = soup.find('div', 'btn-group btn-group-paging').find_all('a')[1]['href']
