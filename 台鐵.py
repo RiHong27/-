@@ -16,7 +16,7 @@ def getTrip():
     soup = BeautifulSoup(resp.text, 'html5lib')
     stations = soup.find(id = 'cityHot').ul.find_all('li') #li包含各車站名稱與代碼
     for station in stations:
-        stationName = station.button.text #名稱被標籤button包起來,轉為字串
+        stationName = station.button.text #名稱被標籤button包起來
         stationId = station.button['title']
         staDic[stationName] = stationId
     csrf = soup.find(id = 'queryForm').find('input',{'name':'_csrf'})['value']
@@ -29,8 +29,8 @@ def getTrip():
             'rideDate':today,
             'startTime':sTime,
             'endTime':eTime,
-           '_csrf':csrf}
-    queryUrl = soup.find(id='queryForm')['action']
+           '_csrf':csrf} #回傳給台鐵主機的清單內容
+    queryUrl = soup.find(id='queryForm')['action'] #回傳網址
     qResp = requests.post('https://tip.railway.gov.tw'+queryUrl, data=formData)
     qSoup = BeautifulSoup(qResp.text, 'html5lib')
     trs = qSoup.find_all('tr', 'trip-column')
